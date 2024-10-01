@@ -10,6 +10,7 @@ import org.mapstruct.Named;
 import com.arka.app_services.dtos.admin.create.CategoryCreateDto;
 import com.arka.app_services.dtos.admin.read.CategoryDto;
 import com.arka.app_services.dtos.admin.update.CategoryUpdateDto;
+import com.arka.app_services.dtos.client.create.CategoryCreateCliDto;
 import com.arka.app_services.dtos.client.read.CategoryCliDto;
 import com.arka.app_services.entities.Business;
 import com.arka.app_services.entities.Category;
@@ -21,6 +22,10 @@ public interface ICategoryMapper {
 
     @Mapping(target = "business", ignore = true)    
     Category toEntity( CategoryCreateDto dto );
+
+
+    @Mapping(target = "business", ignore = true)    
+    Category toEntity( CategoryCreateCliDto dto );
 
     
     

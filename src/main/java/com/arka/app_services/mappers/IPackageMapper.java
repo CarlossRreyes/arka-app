@@ -12,6 +12,7 @@ import org.mapstruct.Named;
 import com.arka.app_services.dtos.admin.create.PackageCreateDto;
 import com.arka.app_services.dtos.admin.read.PackageDetailDto;
 import com.arka.app_services.dtos.admin.read.PackageDto;
+import com.arka.app_services.dtos.client.create.PackageCreateCliDto;
 import com.arka.app_services.dtos.client.read.PackageCliDto;
 import com.arka.app_services.entities.Package;
 import com.arka.app_services.entities.PackageDetail;
@@ -24,6 +25,9 @@ public interface IPackageMapper {
 
     @Mapping( target = "packageDetails", ignore = true )
     Package toDomain ( PackageCreateDto dto );
+
+    @Mapping( target = "packageDetails", ignore = true )
+    Package toDomain ( PackageCreateCliDto dto );
     
     @Mapping( target = "package_id", source = "package_id", qualifiedByName = "uuidToString" )   
     PackageDto toDto ( Package domain );    

@@ -12,7 +12,6 @@ import lombok.*;
 public class PackageDetailsCreateDto {
 
     private String code;
-    // private String product_id;
 
     private Integer quantity;
 

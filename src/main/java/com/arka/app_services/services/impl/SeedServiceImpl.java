@@ -1,5 +1,6 @@
 package com.arka.app_services.services.impl;
 
+import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
@@ -12,6 +13,10 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.arka.app_services.dtos.admin.create.PackageDetailsCreateDto;
+import com.arka.app_services.dtos.client.create.PackageDetailsCreateCliDto;
+import com.arka.app_services.entities.PackageDetail;
+import com.arka.app_services.entities.PackagePricing;
 import com.arka.app_services.entities.Privilege;
 import com.arka.app_services.entities.ProductImage;
 import com.arka.app_services.entities.ProductPricing;
@@ -20,6 +25,7 @@ import com.arka.app_services.errors.exceptions.ConflictException;
 import com.arka.app_services.mappers.IBusinessMapper;
 import com.arka.app_services.mappers.IBusinessTypeMapper;
 import com.arka.app_services.mappers.ICategoryMapper;
+import com.arka.app_services.mappers.IPackageMapper;
 import com.arka.app_services.mappers.IPrivilegeMapper;
 import com.arka.app_services.mappers.IProductMapper;
 import com.arka.app_services.mappers.IRoleMapper;
@@ -55,6 +61,9 @@ public class SeedServiceImpl implements ISeedService {
     //***************Mapper****************/
     @Autowired
     private ICategoryMapper iCategoryMapper;
+
+    @Autowired
+    private IPackageMapper iPackageMapper;
 
     @Autowired
     private IBusinessMapper businessMapper;
@@ -162,6 +171,11 @@ public class SeedServiceImpl implements ISeedService {
         this.deleteAllCategories();
         this.deleteAllProducts();
         this.deleteAllBusiness();
+
+        // this.deleteRole();
+        // this.deletePrivilege();
+
+        // this.deleteUser();
         
         this.insertBusinessType();
         this.insertBusiness();
@@ -188,7 +202,7 @@ public class SeedServiceImpl implements ISeedService {
                 //     iCategoryService.findOneByCode( code )
                 // ).collect( Collectors.toSet() );
 
-                var business = businessService.findOneByCode( categoryDto.getBusiness_id() );
+                var business = businessService.findOneByCode( categoryDto.getBusiness_code() );
                 
                 newCategory.setBusiness( business );
                 categoryRepository.save( newCategory );
@@ -335,9 +349,63 @@ public class SeedServiceImpl implements ISeedService {
 
     @Override
     public void insertPackages() {
-        seedData.getPackages().stream().forEach( packageDto -> {
-            iPackageService.create( packageDto );
-        });
+
+
+        try {
+            
+            seedData.getPackages().stream().forEach( dto -> {
+                // iPackageService.create( packageDto );
+                var total_units = dto.getDetails().stream().mapToInt( PackageDetailsCreateCliDto::getQuantity ).sum();
+    
+                var total_price = dto.getDetails().stream()
+                    .map( detail -> detail.getBase_price())
+                    .reduce( BigDecimal.ZERO, BigDecimal::add);                            
+            
+                
+                var packageObj =  iPackageMapper.toDomain( dto );
+                packageObj.setPackageDetails(
+                    dto.getDetails().stream().map( packageDto -> {
+    
+                        
+                        var pricing = new HashSet<>(
+                            Arrays.asList(
+                                PackagePricing.builder()
+                                    .base_price( packageDto.getBase_price() )
+                                    .is_active( true )
+                                    .is_current( true )
+                                    .build()
+                                
+                            )
+                        );
+    
+                        
+                        var newDetails =  PackageDetail.builder()
+                        .product( iProductService.findOneByCode( packageDto.getCode() ) )
+                        .quantity( packageDto.getQuantity() )
+                        // .base_price( packageDto.getBase_price() )
+                        .pricings( pricing )
+                        .build();
+                        
+                        pricing.stream()
+                            .peek(price -> price.setDetail( newDetails ))
+                            .collect( Collectors.toCollection( HashSet::new ));
+    
+                        return newDetails;
+    
+    
+                    }).collect( Collectors.toSet() )
+                );
+                packageObj.setTotal_units( total_units );
+                packageObj.setTotal_price( total_price );
+                packageObj.setIs_available( true );
+            
+    
+                iPackageRepository.save( packageObj );
+                // var packateDto = iPackageMapper.toDto( newPackage );
+            });
+        } catch (DataAccessException e) {
+            throw e;
+        }
     }
 
     @Override

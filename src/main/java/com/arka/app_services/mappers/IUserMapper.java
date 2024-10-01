@@ -5,6 +5,7 @@ import java.util.UUID;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
+import com.arka.app_services.dtos.client.create.UserCreateCliDto;
 import com.arka.app_services.dtos.client.read.UserCliDto;
 import com.arka.app_services.entities.User;
 
@@ -16,6 +17,11 @@ public interface IUserMapper {
     @Mapping(target = "user_id", ignore = true)    
     @Mapping(target = "roles", ignore = true)    
     User toEntity( UserCliDto dto );
+
+
+    @Mapping(target = "user_id", ignore = true)    
+    @Mapping(target = "roles", ignore = true)    
+    User toEntity( UserCreateCliDto dto );
 
 
     

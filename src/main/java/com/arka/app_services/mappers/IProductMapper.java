@@ -13,6 +13,7 @@ import org.mapstruct.Named;
 import com.arka.app_services.dtos.admin.create.ProductCreateDto;
 import com.arka.app_services.dtos.admin.read.ProductDto;
 import com.arka.app_services.dtos.admin.update.ProductUpdateDto;
+import com.arka.app_services.dtos.client.create.ProductCreateCliDto;
 import com.arka.app_services.dtos.client.read.ProductCliDto;
 import com.arka.app_services.dtos.client.read.ProductPricingCliDto;
 // import com.arka.app_services.dtos.consumer.read.ProductCoDto;
@@ -34,6 +35,12 @@ public interface IProductMapper {
     @Mapping(target = "images", ignore = true)   
     @Mapping(target = "business", ignore = true)   
     Product toEntity(ProductCreateDto dto);
+
+    @Mapping(target = "categories", ignore = true)
+    @Mapping(target = "pricings", ignore = true)
+    @Mapping(target = "images", ignore = true)   
+    @Mapping(target = "business", ignore = true)   
+    Product toEntity(ProductCreateCliDto dto);
 
     @Mapping(target = "categories", ignore = true)
     @Mapping(target = "pricings", ignore = true)

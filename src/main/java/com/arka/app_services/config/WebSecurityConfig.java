@@ -30,7 +30,7 @@ public class WebSecurityConfig {
                 .requestMatchers("/administration/package/**").hasAnyAuthority("READ_PRIVILEGE", "WRITE_PRIVILEGE")
                 .requestMatchers("/administration/product/**").hasAnyAuthority("READ_PRIVILEGE", "WRITE_PRIVILEGE")
                 .requestMatchers("/administration/category/**").hasAnyAuthority("READ_PRIVILEGE", "WRITE_PRIVILEGE")
-                // .requestMatchers("/administration/seed/**").permitAll()
+                .requestMatchers("/administration/seed/**").permitAll()
                 .requestMatchers("/auth/access/**").permitAll()                                            
 
                 .anyRequest()

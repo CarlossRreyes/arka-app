@@ -9,6 +9,7 @@ import org.mapstruct.Mapping;
 import org.mapstruct.Named;
 
 import com.arka.app_services.dtos.admin.create.BusinessCreateDto;
+import com.arka.app_services.dtos.client.create.BusinessCreateCliDto;
 import com.arka.app_services.dtos.client.read.BusinessCliDto;
 import com.arka.app_services.entities.Business;
 import com.arka.app_services.entities.BusinessType;
@@ -22,6 +23,8 @@ public interface IBusinessMapper {
 
     // @Mapping(target = "categories", ignore = true)
     Business toEntity( BusinessCreateDto dto );
+
+    Business toEntity( BusinessCreateCliDto dto );
 
 
     @Mapping(target = "business_id", source = "business_id", qualifiedByName = "uuidToString")

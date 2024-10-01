@@ -8,18 +8,20 @@ import java.util.List;
 
 import org.springframework.stereotype.Component;
 
-import com.arka.app_services.dtos.admin.create.BusinessCreateDto;
-import com.arka.app_services.dtos.admin.create.BusinessTypeCreateDto;
-import com.arka.app_services.dtos.admin.create.CategoryCreateDto;
-import com.arka.app_services.dtos.admin.create.PackageCreateDto;
-import com.arka.app_services.dtos.admin.create.PackageDetailsCreateDto;
-import com.arka.app_services.dtos.admin.create.ProductCreateDto;
-import com.arka.app_services.dtos.client.read.PrivilegeCliDto;
-// import com.arka.app_services.dtos.consumer.read.PrivilegeCliDto;
-// import com.arka.app_services.dtos.consumer.read.RoleCliDto;
-// import com.arka.app_services.dtos.consumer.read.UserCliDto;
-import com.arka.app_services.dtos.client.read.RoleCliDto;
-import com.arka.app_services.dtos.client.read.UserCliDto;
+
+
+
+
+import com.arka.app_services.dtos.client.create.BusinessCreateCliDto;
+import com.arka.app_services.dtos.client.create.BusinessTypeCreateCliDto;
+import com.arka.app_services.dtos.client.create.CategoryCreateCliDto;
+import com.arka.app_services.dtos.client.create.PackageCreateCliDto;
+import com.arka.app_services.dtos.client.create.PackageDetailsCreateCliDto;
+import com.arka.app_services.dtos.client.create.PrivilegeCreateCliDto;
+import com.arka.app_services.dtos.client.create.ProductCreateCliDto;
+import com.arka.app_services.dtos.client.create.RoleCreateCliDto;
+import com.arka.app_services.dtos.client.create.UserCreateCliDto;
+
 
 import lombok.Getter;
 
@@ -27,14 +29,14 @@ import lombok.Getter;
 @Component
 public class SeedData {
 
-    private List<CategoryCreateDto> categories = new ArrayList<>();
-    private List<ProductCreateDto> products = new ArrayList<>();
-    private List<PackageCreateDto> packages = new ArrayList<>();
-    private List<BusinessTypeCreateDto> businessTypes = new ArrayList<>();
-    private List<BusinessCreateDto> businesses = new ArrayList<>();
-    private List<RoleCliDto> roles = new ArrayList<>();
-    private List<PrivilegeCliDto> privileges = new ArrayList<>();
-    private List<UserCliDto> users = new ArrayList<>();
+    private List<CategoryCreateCliDto> categories = new ArrayList<>();
+    private List<ProductCreateCliDto> products = new ArrayList<>();
+    private List<PackageCreateCliDto> packages = new ArrayList<>();
+    private List<BusinessTypeCreateCliDto> businessTypes = new ArrayList<>();
+    private List<BusinessCreateCliDto> businesses = new ArrayList<>();
+    private List<RoleCreateCliDto> roles = new ArrayList<>();
+    private List<PrivilegeCreateCliDto> privileges = new ArrayList<>();
+    private List<UserCreateCliDto> users = new ArrayList<>();
 
 
     public SeedData() {
@@ -43,7 +45,7 @@ public class SeedData {
 
         //********************Admin User for Default************
         users.add( 
-        new UserCliDto(                  
+        new UserCreateCliDto(                  
                 "carlos@gmail.com",
                 "Abc123", 
                 true      
@@ -55,14 +57,14 @@ public class SeedData {
 
         //*******************Roles***************
         roles.add( 
-        new RoleCliDto(                  
+        new RoleCreateCliDto(                  
                 "ADMIN",
                 "This is description admin role", 
                 true      
             )
         );
         roles.add( 
-        new RoleCliDto(                  
+        new RoleCreateCliDto(                  
                 "CLIENT",
                 "This is description client role", 
                 true      
@@ -72,14 +74,14 @@ public class SeedData {
         
         //*******************Privileges***************
         privileges.add( 
-            new PrivilegeCliDto(                  
+            new PrivilegeCreateCliDto(                  
                 "READ_PRIVILEGE",
                 "This is description WRITE_PRIVILEGE", 
                 true      
             )
         );
         privileges.add( 
-            new PrivilegeCliDto(                  
+            new PrivilegeCreateCliDto(                  
                 "WRITE_PRIVILEGE",
                 "This is description WRITE_PRIVILEGE", 
                 true      
@@ -90,7 +92,7 @@ public class SeedData {
 
         //*****************Type Business*********
         businessTypes.add( 
-        new BusinessTypeCreateDto(                  
+        new BusinessTypeCreateCliDto(                  
                 "BEBN01",
                 "Beibidas, Lacteos", 
                 "This is Beibidas, Lacteos description."             
@@ -98,7 +100,7 @@ public class SeedData {
         );
 
         businessTypes.add( 
-        new BusinessTypeCreateDto(                  
+        new BusinessTypeCreateCliDto(                  
                 "FARBN01",
                 "Farmacias", 
                 "This is farmacia description."             
@@ -106,7 +108,7 @@ public class SeedData {
         );
 
         businessTypes.add( 
-        new BusinessTypeCreateDto(                  
+        new BusinessTypeCreateCliDto(                  
                 "FERREBN01",
                 "Ferreterias", 
                 "This is farmacia description."             
@@ -116,7 +118,7 @@ public class SeedData {
 
         //****************Business***************
         businesses.add(
-            new BusinessCreateDto(
+            new BusinessCreateCliDto(
                 "COCABI01",
                 "Coca cola company",
                 "BEBN01",
@@ -130,7 +132,7 @@ public class SeedData {
         );
 
         businesses.add(
-            new BusinessCreateDto(
+            new BusinessCreateCliDto(
                 "TONYBN01",
                 "Tony company",
                 "BEBN01",
@@ -145,7 +147,7 @@ public class SeedData {
 
         // ***************Categories*************
         // categories.add( 
-        // new CategoryCreateDto(                  
+        // new CategoryCreateCliDto(                  
         //         "ENR001",
         //         "Energizing", 
         //         "This is Energizing description.", 
@@ -154,7 +156,7 @@ public class SeedData {
         //     )
         // );
         // categories.add( 
-        //     new CategoryCreateDto(               
+        //     new CategoryCreateCliDto(               
         //         "WAT001",
         //         "Water", 
         //         "This is agua description", 
@@ -163,9 +165,9 @@ public class SeedData {
         //     )
         // );
         categories.add( 
-            new CategoryCreateDto(            
-                "SDA001",
+            new CategoryCreateCliDto(            
                 "COCABI01",
+                "SDA001",
                 "Soda", 
                 "This is soda description", 
                 "s.jpg", 
@@ -174,7 +176,7 @@ public class SeedData {
         );
         
         // categories.add( 
-        //     new CategoryCreateDto(
+        //     new CategoryCreateCliDto(
         //         "JUI001",
         //         "Juices", 
         //         "This is juice description", 
@@ -185,7 +187,7 @@ public class SeedData {
 
 
         // categories.add( 
-        //     new CategoryCreateDto(
+        //     new CategoryCreateCliDto(
         //         "TE001",
         //         "Té", 
         //         "This is Té description", 
@@ -194,7 +196,7 @@ public class SeedData {
         //     )
         // );
         // categories.add( 
-        //     new CategoryCreateDto(                    
+        //     new CategoryCreateCliDto(                    
         //         "NEC001",
         //         "Néctar", 
         //         "This is Néctar description", 
@@ -204,9 +206,9 @@ public class SeedData {
         // );
 
         categories.add( 
-            new CategoryCreateDto(                  
-                "COCA001",
+            new CategoryCreateCliDto(                  
                 "COCABI01",
+                "COCA001",
                 "Coca Cola", 
                 "This is Coca Cola", 
                 "s.jpg", 
@@ -218,7 +220,7 @@ public class SeedData {
 
         // ****************SABOR ORIGINAL*************
         products.add(
-            new ProductCreateDto(  
+            new ProductCreateCliDto(  
                 "COCABI01",              
                 "COCAPT001", 
                 "Coca-Cola Sabor Original 3000 ML.", 
@@ -236,7 +238,7 @@ public class SeedData {
             )
         );
         products.add(
-            new ProductCreateDto(     
+            new ProductCreateCliDto(     
                 "COCABI01",             
                 "COCAPT002", 
                 "Coca-Cola Sabor Original 1000 ML.", 
@@ -258,27 +260,27 @@ public class SeedData {
 
         //*******************PACKAGE *****************/
         packages.add(
-            new PackageCreateDto(
+            new PackageCreateCliDto(
                 6, 
                 BigDecimal.valueOf(16.06), 
                 false,
                 new HashSet<>(
                     Arrays.asList(
-                        new PackageDetailsCreateDto( "COCAPT001",  6, BigDecimal.valueOf(16.06))
-                        // new PackageDetailsCreateDto( "COCA001",  22, BigDecimal.valueOf(6.06))
+                        new PackageDetailsCreateCliDto( "COCAPT001",  6, BigDecimal.valueOf(16.06))
+                        // new PackageDetailsCreateCliDto( "COCA001",  22, BigDecimal.valueOf(6.06))
                     )
                 )
             )
         );
         packages.add(
-            new PackageCreateDto(
+            new PackageCreateCliDto(
                 0, 
                 BigDecimal.valueOf(10.12), 
                 true,
                 new HashSet<>(
                     Arrays.asList(
-                        new PackageDetailsCreateDto( "COCAPT001",  6, BigDecimal.valueOf(16.06)),
-                        new PackageDetailsCreateDto( "COCAPT002",  12, BigDecimal.valueOf(10.22))
+                        new PackageDetailsCreateCliDto( "COCAPT001",  6, BigDecimal.valueOf(16.06)),
+                        new PackageDetailsCreateCliDto( "COCAPT002",  12, BigDecimal.valueOf(10.22))
                     )
                 )
             )

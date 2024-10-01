@@ -24,10 +24,10 @@ import io.jsonwebtoken.security.Keys;
 public class JwtService {
 
     
-    @Value("${pharmacy.web.app.jwtSecret}")
+    @Value("${arka.web.app.jwtSecret}")
 	private String jwtSecret;
     
-	@Value("${pharmacy.web.app.jwtExpirations}")
+	@Value("${arka.web.app.jwtExpirations}")
 	private long jwtExpirations;
 
     public String generateToken( UserDetails userDetails ){

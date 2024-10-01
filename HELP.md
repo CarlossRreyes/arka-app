@@ -53,3 +53,9 @@ Execute this command and up volume
 docker-compose up -d
 ````
 
+## El backend lo pueden obtener de aquí
+
+[Teslo Backend - Nest RestServer](https://hub.docker.com/repository/docker/klerith/flutter-backend-teslo-shop/general)
+
+# Importante
+Recuerden leer y seguir la guía para montar el backend localmente.
