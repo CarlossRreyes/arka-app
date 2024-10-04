@@ -26,7 +26,6 @@ import lombok.*;
 @Data
 @EqualsAndHashCode( exclude = { "categories", "products" } ,callSuper = false )
 @ToString( exclude = "categories")
-// @EqualsAndHashCode( exclude = "product")
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity

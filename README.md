@@ -14,12 +14,16 @@ For further reference, please consider the following sections:
 * [Spring Data JPA](https://docs.spring.io/spring-boot/docs/3.3.4/reference/htmlsingle/index.html#data.sql.jpa-and-spring-data)
 * [Spring Boot DevTools](https://docs.spring.io/spring-boot/docs/3.3.4/reference/htmlsingle/index.html#using.devtools)
 * [Validation](https://docs.spring.io/spring-boot/docs/3.3.4/reference/htmlsingle/index.html#io.validation)
+* [Spring Security](https://docs.spring.io/spring-boot/docs/3.3.4/reference/htmlsingle/index.html#web.security)
 
 ### Guides
 The following guides illustrate how to use some features concretely:
 
 * [Accessing Data with JPA](https://spring.io/guides/gs/accessing-data-jpa/)
 * [Validation](https://spring.io/guides/gs/validating-form-input/)
+* [Securing a Web Application](https://spring.io/guides/gs/securing-web/)
+* [Spring Boot and OAuth2](https://spring.io/guides/tutorials/spring-boot-oauth2/)
+* [Authenticating a User with LDAP](https://spring.io/guides/gs/authenticating-ldap/)
 
 ### Maven Parent overrides
 
@@ -32,24 +36,25 @@ If you manually switch to a different parent and actually want the inheritance, 
 ### Dev
 Clone this repository:
 ````
-git remote add origin https://github.com/CarlossRreyes/arka-app.git
+git clone https://github.com/CarlossRreyes/arka-app.git
 ````
-
+Config dependencies:
+```
+mvn clean install
+```
+Execute this command and up volume
+````
+docker-compose up -d
+````
 Run application:
 ````
 mvn spring-boot:run
-````
-
-Execute seed ( Insert user por default )
-````
-http://localhost:4041/api/administration/seed/client
 ````
 Execute store procedure in database gestore
 ````
 src/main/resources/sql/operations.sql
 ````
-Execute this command and up volume
+Execute seed ( Insert user por default )
 ````
-docker-compose up -d
+http://localhost:4041/api/administration/seed/client
 ````
-

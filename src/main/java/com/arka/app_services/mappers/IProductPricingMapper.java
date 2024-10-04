@@ -15,8 +15,7 @@ import com.arka.app_services.entities.ProductPricing;
 @Mapper( componentModel = "spring" )
 public interface IProductPricingMapper {
 
-    
-    // @Mapping( target = "product_pricing_id", ignore = true )
+        
     ProductPricing toEntity( ProductPricingCreateDto dto );
 
     @Mapping(target = "product_pricing_id", ignore = true)

@@ -1,24 +1,22 @@
 package com.arka.app_services.entities;
 
-
-
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
-
 import com.arka.app_services.constants.Auditable;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.*;
 
-import java.io.Serializable;
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
+
 import java.util.UUID;
 
 import lombok.*;
 
 @Builder
-@Data
+// @Data
+@Getter
+@Setter
+@ToString( exclude = "detail")
+@EqualsAndHashCode( exclude = "detail", callSuper = false )
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
@@ -44,12 +42,5 @@ public class PackagePricing extends Auditable {
     @Column(name = "is_active", nullable = false )
     private Boolean is_active;
 
-    // @CreationTimestamp
-    // @Column( name = "created_at", nullable = false, updatable = false )
-    // private LocalDateTime created_at;
-
-    // @UpdateTimestamp
-    // @Column( name = "updated_at" )
-    // private LocalDateTime updated_at;
     
 }

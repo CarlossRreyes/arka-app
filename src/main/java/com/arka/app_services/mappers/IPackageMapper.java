@@ -17,10 +17,10 @@ import com.arka.app_services.dtos.client.read.PackageCliDto;
 import com.arka.app_services.entities.Package;
 import com.arka.app_services.entities.PackageDetail;
 import com.arka.app_services.entities.PackagePricing;
-import com.arka.app_services.entities.Product;
 
 
-@Mapper( componentModel = "spring", uses = IProductMapper.class )
+
+@Mapper( componentModel = "spring", uses = {IProductMapper.class, IConstantsMapper.class } )
 public interface IPackageMapper {
 
     @Mapping( target = "packageDetails", ignore = true )

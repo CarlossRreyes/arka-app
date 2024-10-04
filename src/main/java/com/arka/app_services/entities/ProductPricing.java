@@ -1,20 +1,14 @@
 package com.arka.app_services.entities;
 
-import java.io.Serializable;
+
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 import java.util.UUID;
-
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
-
 import com.arka.app_services.constants.Auditable;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 
 import jakarta.persistence.*;
 import lombok.*;
-// @Data
 
 @Builder
 @AllArgsConstructor
@@ -22,7 +16,7 @@ import lombok.*;
 @Getter
 @Setter
 @ToString( exclude = "product")
-@EqualsAndHashCode( exclude = "product")
+@EqualsAndHashCode( exclude = "product", callSuper = false)
 @Entity
 @Table(name = "tb_product_pricing")
 public class ProductPricing extends Auditable {

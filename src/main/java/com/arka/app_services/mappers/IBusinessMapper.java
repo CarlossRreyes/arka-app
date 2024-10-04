@@ -18,10 +18,10 @@ import com.arka.app_services.entities.Product;
 
 
 
-@Mapper( componentModel = "spring" )
+@Mapper( componentModel = "spring", uses = { IConstantsMapper.class} )
 public interface IBusinessMapper {
 
-    // @Mapping(target = "categories", ignore = true)
+
     Business toEntity( BusinessCreateDto dto );
 
     Business toEntity( BusinessCreateCliDto dto );
@@ -32,12 +32,6 @@ public interface IBusinessMapper {
     @Mapping(target = "categories", source = "categories", qualifiedByName = "categoriesToStringSet")
     @Mapping(target = "products", source = "products", qualifiedByName = "productsToStringSet")
     BusinessCliDto toCliDto ( Business business );
-
-
-    @Named("uuidToString")
-    static String uuidToString(UUID uuid) {
-        return uuid.toString();
-    }
 
     @Named("businessTypeToString")
     static String businessTypeToString(BusinessType businessType) {

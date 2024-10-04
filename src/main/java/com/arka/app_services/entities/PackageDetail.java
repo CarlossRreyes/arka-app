@@ -1,13 +1,9 @@
 package com.arka.app_services.entities;
 
-import java.io.Serializable;
+
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 import java.util.Set;
 import java.util.UUID;
-
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 
 import com.arka.app_services.constants.Auditable;
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -35,7 +31,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString( exclude = "pricings")
-@EqualsAndHashCode( exclude = "pricings")
+@EqualsAndHashCode( exclude = "pricings", callSuper = false )
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
@@ -55,7 +51,7 @@ public class PackageDetail extends Auditable {
     @OneToMany(mappedBy = "detail", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonBackReference 
     private Set<PackagePricing> pricings;
-
+    
     private BigDecimal base_price_units;
 
     @Column( name = "quantity")

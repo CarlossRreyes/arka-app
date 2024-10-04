@@ -264,7 +264,7 @@ public class ProductServiceImpl implements IProductService {
                   
             var products = this.iProductRepository.findByActive( pageRequest ).getContent();  
 
-            return products.stream().map( iproductMapper::toCoDto )
+            return products.stream().map( iproductMapper::toCliDto )
                 .collect( Collectors.toList() );            
                
         } catch (DataAccessException e) {

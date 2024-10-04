@@ -27,6 +27,7 @@ public class WebSecurityConfig {
                 .requestMatchers("/administration/category/client/**").permitAll()
                 .requestMatchers("/administration/product/client/**").permitAll()
                 .requestMatchers("/administration/package/client/**").permitAll()
+                .requestMatchers("/administration/business/client/**").permitAll()
                 .requestMatchers("/administration/package/**").hasAnyAuthority("READ_PRIVILEGE", "WRITE_PRIVILEGE")
                 .requestMatchers("/administration/product/**").hasAnyAuthority("READ_PRIVILEGE", "WRITE_PRIVILEGE")
                 .requestMatchers("/administration/category/**").hasAnyAuthority("READ_PRIVILEGE", "WRITE_PRIVILEGE")

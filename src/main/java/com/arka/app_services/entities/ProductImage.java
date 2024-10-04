@@ -1,19 +1,13 @@
 package com.arka.app_services.entities;
 
-import java.io.Serializable;
-import java.time.LocalDateTime;
 import java.util.UUID;
-
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
-
 import com.arka.app_services.constants.Auditable;
-
 import jakarta.persistence.*;
 import lombok.*;
 
 @Builder
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
@@ -30,13 +24,5 @@ public class ProductImage extends Auditable {
     
     @Column( name = "is_active")
     private Boolean is_active;
-
-    // @CreationTimestamp
-    // @Column( name = "created_at", nullable = false, updatable = false )
-    // private LocalDateTime created_at;
-
-    // @UpdateTimestamp
-    // @Column( name = "updated_at" )
-    // private LocalDateTime updated_at;
     
 }

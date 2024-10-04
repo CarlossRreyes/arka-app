@@ -1,7 +1,5 @@
 package com.arka.app_services.mappers;
 
-import java.util.UUID;
-
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 

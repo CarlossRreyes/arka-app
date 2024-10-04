@@ -1,6 +1,7 @@
 package com.arka.app_services.services.impl;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
@@ -158,7 +159,11 @@ public class SeedServiceImpl implements ISeedService {
         this.deleteAllImageProducts();
         this.deleteAllCategoriesProducts();
                                 
-        this.deteleAllPackageDetailsProduct();
+        this.deteleAllPackageDetailsProduct(); 
+
+
+
+
 
 
         this.deleteAllProductPricing();
@@ -171,11 +176,6 @@ public class SeedServiceImpl implements ISeedService {
         this.deleteAllCategories();
         this.deleteAllProducts();
         this.deleteAllBusiness();
-
-        // this.deleteRole();
-        // this.deletePrivilege();
-
-        // this.deleteUser();
         
         this.insertBusinessType();
         this.insertBusiness();
@@ -195,13 +195,8 @@ public class SeedServiceImpl implements ISeedService {
     public void insertCategories() {
 
         try {
-            seedData.getCategories().stream().parallel().forEach( categoryDto -> {
+            seedData.getCategories().stream().forEach( categoryDto -> {
                 var newCategory = iCategoryMapper.toEntity( categoryDto );
-
-                // var businesses = categoryDto.get().stream().map( code -> 
-                //     iCategoryService.findOneByCode( code )
-                // ).collect( Collectors.toSet() );
-
                 var business = businessService.findOneByCode( categoryDto.getBusiness_code() );
                 
                 newCategory.setBusiness( business );
@@ -228,21 +223,9 @@ public class SeedServiceImpl implements ISeedService {
                                     .is_active( true )
                                     .build()
                             )
-                );
-                // var pricingPackages = new HashSet<>(                    
-                //             Arrays.asList(
-                //                 PackagePricing.builder()
-                //                     .base_price( productDto.getBase_price() )                                    
-                //                     .is_current( true )
-                //                     .is_active( true )
-                //                     .build()
-                //             )
-                // );
-
-
+                );                
                 
-                
-                var newProduct = iProductMapper.toEntity( productDto );
+                var newProduct = iProductMapper.toCliEntity( productDto );
                 
                 var business = businessService.findOneByCode( productDto.getBusiness_code() );
                 newProduct.setBusiness( business );
@@ -294,7 +277,7 @@ public class SeedServiceImpl implements ISeedService {
         try {
             var products = productRepository.findAll();
     
-            products.stream().parallel().forEach( product -> {
+            products.stream().forEach( product -> {
                 product.getCategories().clear();
                 productRepository.save( product );
             });                     
@@ -354,7 +337,7 @@ public class SeedServiceImpl implements ISeedService {
         try {
             
             seedData.getPackages().stream().forEach( dto -> {
-                // iPackageService.create( packageDto );
+                
                 var total_units = dto.getDetails().stream().mapToInt( PackageDetailsCreateCliDto::getQuantity ).sum();
     
                 var total_price = dto.getDetails().stream()
@@ -377,12 +360,19 @@ public class SeedServiceImpl implements ISeedService {
                                 
                             )
                         );
-    
+                        
+                        BigDecimal total_units_bd = BigDecimal.valueOf(total_units);
+
+                        
+                        var base_price_by_units = total_price.divide(total_units_bd, 2, RoundingMode.HALF_UP);  // 2 es la cantidad de decimales
+
                         
                         var newDetails =  PackageDetail.builder()
                         .product( iProductService.findOneByCode( packageDto.getCode() ) )
                         .quantity( packageDto.getQuantity() )
-                        // .base_price( packageDto.getBase_price() )
+                        .is_included( true )                                                
+
+                        .base_price_units( base_price_by_units )
                         .pricings( pricing )
                         .build();
                         
@@ -400,8 +390,7 @@ public class SeedServiceImpl implements ISeedService {
                 packageObj.setIs_available( true );
             
     
-                iPackageRepository.save( packageObj );
-                // var packateDto = iPackageMapper.toDto( newPackage );
+                iPackageRepository.save( packageObj );                
             });
         } catch (DataAccessException e) {
             throw e;
@@ -430,7 +419,7 @@ public class SeedServiceImpl implements ISeedService {
     @Override
     public void insertBusinessType() {
         try {
-            seedData.getBusinessTypes().stream().parallel().forEach( businessTypesDto -> {
+            seedData.getBusinessTypes().stream().forEach( businessTypesDto -> {
                 var newBusinessType = iBusinessTypeMapper.toEntity( businessTypesDto );
                 newBusinessType.setIs_active( true );
                 businessTypeRepository.save( newBusinessType );
@@ -452,7 +441,7 @@ public class SeedServiceImpl implements ISeedService {
     @Override
     public void insertBusiness() {
         try {
-            seedData.getBusinesses().stream().parallel().forEach( businessDto -> {
+            seedData.getBusinesses().stream().forEach( businessDto -> {
                 var newBusiness = businessMapper.toEntity( businessDto );
 
                 var businessType = businessTypeService.findOneByCode( businessDto.getBusiness_type_code() );
@@ -478,7 +467,7 @@ public class SeedServiceImpl implements ISeedService {
     @Override
     public void insertRoles() {
         try {
-            seedData.getRoles().stream().parallel().forEach( roleDto -> {
+            seedData.getRoles().stream().forEach( roleDto -> {
                 var newRoles = iRoleMapper.toEntity( roleDto );
         
                 roleRepository.save( newRoles );
@@ -491,7 +480,7 @@ public class SeedServiceImpl implements ISeedService {
     @Override
     public void insertPrivileges() {
         try {
-            seedData.getPrivileges().stream().parallel().forEach( privilegeDto -> {
+            seedData.getPrivileges().stream().forEach( privilegeDto -> {
                 var newPrivilege = iPrivilegeMapper.toEntity( privilegeDto );
         
                 privilegeRepository.save( newPrivilege );
@@ -504,7 +493,7 @@ public class SeedServiceImpl implements ISeedService {
     @Override
     public void insertUsers() {
         try {
-            seedData.getUsers().stream().parallel().forEach( userDto -> {
+            seedData.getUsers().stream().forEach( userDto -> {
                 var newUsers = iUserMapper.toEntity( userDto );
                 newUsers.setPassword( new BCryptPasswordEncoder().encode( userDto.getPassword() ) );
                 Set<Privilege> privileges = new HashSet<>();
@@ -540,7 +529,7 @@ public class SeedServiceImpl implements ISeedService {
         try {
             var users = userRepository.findAll();
     
-            users.stream().parallel().forEach( user -> {
+            users.stream().forEach( user -> {
                 user.getRoles().clear();
                 user.getAuthorities().clear();
                 userRepository.save( user );
@@ -555,7 +544,7 @@ public class SeedServiceImpl implements ISeedService {
         try {
             var roles = roleRepository.findAll();
     
-            roles.stream().parallel().forEach( role -> {
+            roles.stream().forEach( role -> {
                 role.getPrivileges().clear();                
                 roleRepository.save( role );
             });                     
@@ -597,10 +586,9 @@ public class SeedServiceImpl implements ISeedService {
         try {
             var packagesDetails = packageDetailRepository.findAll();
     
-            packagesDetails.stream().parallel().forEach( details -> {
-                // details.setProduct(null);    
-                // d      
-                packageDetailRepository.deleteAll();
+            packagesDetails.stream().forEach( details -> {
+                details.setProduct(null);                    
+                // packageDetailRepository.deleteAll();
             });                     
         } catch (DataAccessException e) {
             throw e;

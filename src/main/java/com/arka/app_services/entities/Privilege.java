@@ -1,15 +1,14 @@
 package com.arka.app_services.entities;
 
-import java.io.Serializable;
+
 import java.util.UUID;
-
 import com.arka.app_services.constants.Auditable;
-
 import jakarta.persistence.*;
 import lombok.*;
 
 @Builder
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity

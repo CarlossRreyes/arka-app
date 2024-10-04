@@ -27,8 +27,6 @@ public interface IPackageRepository extends JpaRepository< Package, UUID > {
 
     @Query("Select p from Package p where p.is_available = true")
     Page<Package> findByActive ( Pageable pageable );
-    // @Query("")
-    // Page<Category> findAllByBusinessUuid ( Pageable pageable );
 
 }
 

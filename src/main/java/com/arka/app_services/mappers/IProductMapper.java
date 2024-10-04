@@ -25,22 +25,24 @@ import com.arka.app_services.entities.ProductImage;
 import com.arka.app_services.entities.ProductPricing;
 
 
-@Mapper( componentModel = "spring" )
+@Mapper( componentModel = "spring", uses = { IConstantsMapper.class} )
 public interface IProductMapper {
 
-    // @Mapping(target = "product_id", ignore = true)
+    
 
+    @Mapping(target = "product_id", ignore = true)   
     @Mapping(target = "categories", ignore = true)
     @Mapping(target = "pricings", ignore = true)
     @Mapping(target = "images", ignore = true)   
     @Mapping(target = "business", ignore = true)   
     Product toEntity(ProductCreateDto dto);
-
+    
+    @Mapping(target = "product_id", ignore = true)   
     @Mapping(target = "categories", ignore = true)
     @Mapping(target = "pricings", ignore = true)
     @Mapping(target = "images", ignore = true)   
     @Mapping(target = "business", ignore = true)   
-    Product toEntity(ProductCreateCliDto dto);
+    Product toCliEntity(ProductCreateCliDto dto);
 
     @Mapping(target = "categories", ignore = true)
     @Mapping(target = "pricings", ignore = true)
@@ -55,16 +57,12 @@ public interface IProductMapper {
     @Mapping(target = "business_id", source = "business", qualifiedByName = "businessToString")
     ProductDto toDto(Product product);
     
-    // @Mapping(target = "pricings", source = "pricings", qualifiedByName = "pricingsToStringSet")
-    
-    // @Mapping(target = "pricings", source = "pricings")
     @Mapping(target = "images", source = "images", qualifiedByName = "imagesToStringSet")
     @Mapping(target = "categories", source = "categories", qualifiedByName = "categoriesToStringSet")
     @Mapping(target = "product_id", source = "product_id", qualifiedByName = "uuidToString")
     @Mapping(target = "business_id", source = "business", qualifiedByName = "businessToString")
-    @Mapping(target = "price", source = "pricings", qualifiedByName = "getCurrentPrice")
-    // @Mapping(target = "pricings", source = "pricings", qualifiedByName = "pricingsToDtoSet")
-    ProductCliDto toCoDto ( Product product );
+    @Mapping(target = "base_price", source = "pricings", qualifiedByName = "getCurrentPrice")    
+    ProductCliDto toCliDto ( Product product );
     
 
     @Named("imagesToStringSet")
@@ -82,25 +80,15 @@ public interface IProductMapper {
         return pricings.stream().map(pricing -> pricing.getProduct_pricing_id().toString()).collect(Collectors.toSet());
     }
 
-    @Named("uuidToString")
-    static String uuidToString(UUID uuid) {
-        return uuid.toString();
-    }
-
     @Named("businessToString")
     static String businessToString(Business business) {
         return business.getBusiness_id().toString();
     }
 
-
-
-
     @Named("pricingsToDtoSet")
     default Set<ProductPricingCliDto> pricingsToDtoSet(Set<ProductPricing> pricings) {
         return pricings.stream().map(this::productPricingToDto).collect(Collectors.toSet());
     }
-
-
 
     @Mapping(target = "product_pricing_id", source = "product_pricing_id", qualifiedByName = "uuidToString")
     ProductPricingCliDto productPricingToDto(ProductPricing pricing);
@@ -108,10 +96,10 @@ public interface IProductMapper {
     @Named("getCurrentPrice")
     default BigDecimal getCurrentPrice(Set<ProductPricing> pricings) {
         return pricings.stream()
-            .filter(ProductPricing::getIs_current)  // Filter by is_current = true
+            .filter(ProductPricing::getIs_current)
             .findFirst()
-            .map(ProductPricing::getBase_price)  // Get the base price
-            .orElse(null);  // Return null if no current pricing is found
+            .map(ProductPricing::getBase_price)
+            .orElse(null);
     }
     
 

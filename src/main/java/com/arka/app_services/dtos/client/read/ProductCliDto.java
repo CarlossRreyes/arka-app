@@ -32,29 +32,10 @@ public class ProductCliDto {
     private Boolean is_available;
 
     private Set<String> categories;
-    // private Set<ProductPricingCoDto> pricings;
-    private BigDecimal price;
+    
+    private BigDecimal base_price;
     
     private Set<String> images;
 
     
 }
-
-// private String product_id;
-// private String business_id;
-// private String code;
-
-// private String name;
-
-
-// private String description;
-
-
-// private Integer units_in_stock;
-
-// private Boolean is_available;
-
-// private Set<String> categories;
-// private Set<String> pricings;
-
-// private Set<String> images;

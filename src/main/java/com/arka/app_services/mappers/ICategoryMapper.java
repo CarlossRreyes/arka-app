@@ -17,7 +17,7 @@ import com.arka.app_services.entities.Category;
 
 
 
-@Mapper( componentModel = "spring" )
+@Mapper( componentModel = "spring", uses = { IConstantsMapper.class } )
 public interface ICategoryMapper {
 
     @Mapping(target = "business", ignore = true)    
@@ -40,12 +40,6 @@ public interface ICategoryMapper {
     @Mapping(target = "category_id", source = "category_id", qualifiedByName = "uuidToString")
     @Mapping(target = "business_id", source = "business", qualifiedByName = "businessToString")
     CategoryCliDto toCliDto(Category category);
-
-
-    @Named("uuidToString")
-    static String uuidToString(UUID uuid) {
-        return uuid.toString();
-    }
     
     @Named("businessToString")
     static String businessToString(Business business) {
